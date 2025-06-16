@@ -166,7 +166,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Tim Pengembang - roro-jonggrang-team@example.com
 
-Project Link: [https://github.com/yourusername/roro-jonggrang-game-interaktif](https://github.com/yourusername/roro-jonggrang-game-interaktif)
+Project Link: [https://github.com/hydarlm/roro-jonggrang-game-interaktif](https://github.com/hydarlm/roro-jonggrang-game-interaktif)
 
 ## 🙏 Acknowledgments
 

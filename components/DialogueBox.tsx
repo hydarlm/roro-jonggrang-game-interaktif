@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronDown } from 'lucide-react-native';
 import Animated, { FadeIn, SlideInDown } from 'react-native-reanimated';
@@ -83,21 +89,27 @@ export default function DialogueBox({
   const getChoiceStyle = (choice: DialogueChoice) => {
     switch (choice.effect) {
       case 'positive':
-        return { backgroundColor: 'rgba(76, 175, 80, 0.2)', borderColor: '#4CAF50' };
+        return {
+          backgroundColor: 'rgba(76, 175, 80, 0.2)',
+          borderColor: '#4CAF50',
+        };
       case 'negative':
-        return { backgroundColor: 'rgba(244, 67, 54, 0.2)', borderColor: '#F44336' };
+        return {
+          backgroundColor: 'rgba(244, 67, 54, 0.2)',
+          borderColor: '#F44336',
+        };
       default:
-        return { backgroundColor: 'rgba(212, 175, 55, 0.2)', borderColor: '#D4AF37' };
+        return {
+          backgroundColor: 'rgba(212, 175, 55, 0.2)',
+          borderColor: '#D4AF37',
+        };
     }
   };
 
   if (!isVisible) return null;
 
   return (
-    <Animated.View 
-      entering={SlideInDown.springify()} 
-      style={styles.container}
-    >
+    <Animated.View entering={SlideInDown.springify()} style={styles.container}>
       <LinearGradient
         colors={['rgba(0,0,0,0.9)', 'rgba(26,26,26,0.95)', 'rgba(0,0,0,0.9)']}
         style={styles.dialogueBox}
@@ -107,25 +119,28 @@ export default function DialogueBox({
             <Text style={styles.speakerName}>{speaker}</Text>
           </View>
         )}
-        
-        <TouchableOpacity 
+
+        <TouchableOpacity
           style={styles.textContainer}
           onPress={handleNext}
           activeOpacity={0.8}
         >
           <Text style={styles.dialogueText}>{displayedText}</Text>
-          
+
           {!isTyping && !showChoices && (
-            <Animated.View entering={FadeIn.delay(300)} style={styles.continueIndicator}>
+            <Animated.View
+              entering={FadeIn.delay(300)}
+              style={styles.continueIndicator}
+            >
               <ChevronDown size={16} color="#D4AF37" />
               <Text style={styles.continueText}>Tap untuk lanjut</Text>
             </Animated.View>
           )}
         </TouchableOpacity>
-        
+
         {showChoices && choices && choices.length > 0 && (
-          <Animated.View 
-            entering={FadeIn.delay(300)} 
+          <Animated.View
+            entering={FadeIn.delay(300)}
             style={styles.choicesContainer}
           >
             <Text style={styles.choicesLabel}>Pilih respons:</Text>

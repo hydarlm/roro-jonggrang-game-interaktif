@@ -1,7 +1,12 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ChevronLeft, ChevronRight, Menu, Chrome as Home } from 'lucide-react-native';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Menu,
+  Chrome as Home,
+} from 'lucide-react-native';
 import { router } from 'expo-router';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
@@ -35,11 +40,7 @@ export default function NavigationControls({
   if (!isVisible) return null;
 
   return (
-    <Animated.View 
-      entering={FadeIn} 
-      exiting={FadeOut}
-      style={styles.container}
-    >
+    <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.container}>
       {/* Left Controls */}
       <View style={styles.leftControls}>
         {showBack && (
@@ -57,7 +58,7 @@ export default function NavigationControls({
             </LinearGradient>
           </TouchableOpacity>
         )}
-        
+
         {showHome && (
           <TouchableOpacity
             style={styles.controlButton}
@@ -92,7 +93,7 @@ export default function NavigationControls({
             </LinearGradient>
           </TouchableOpacity>
         )}
-        
+
         {showNext && (
           <TouchableOpacity
             style={styles.controlButton}

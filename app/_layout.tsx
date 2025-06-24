@@ -13,6 +13,10 @@ import {
 } from '@expo-google-fonts/crimson-text';
 import * as SplashScreen from 'expo-splash-screen';
 
+// ✅ Import SoundProvider
+import { SoundProvider } from '../components/SoundManager';
+import { ProgressProvider } from '../components/ProgressTracker';
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -36,12 +40,14 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <ProgressProvider>
+    <SoundProvider>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="+not-found" />
+        <Stack.Screen name="not-found" />
       </Stack>
       <StatusBar style="light" />
-    </>
+    </SoundProvider>
+    </ProgressProvider>
   );
 }

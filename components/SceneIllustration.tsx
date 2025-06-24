@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
-import { View, Image, StyleSheet, TouchableOpacity, Modal, Dimensions } from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  Dimensions,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ZoomIn, ZoomOut, X } from 'lucide-react-native';
-import Animated, { FadeIn, ZoomIn as ReanimatedZoomIn } from 'react-native-reanimated';
+import Animated, {
+  FadeIn,
+  ZoomIn as ReanimatedZoomIn,
+} from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('window');
 
 interface SceneIllustrationProps {
-  imageUrl: string;
+  imageUrl?: number | string;
   title?: string;
   allowZoom?: boolean;
   overlay?: boolean;
@@ -39,27 +49,34 @@ export default function SceneIllustration({
         disabled={!allowZoom}
       >
         <Image
-          source={{ uri: imageUrl }}
+          source={
+            typeof imageUrl === 'string'
+              ? { uri: imageUrl }
+              : imageUrl
+          }
           style={styles.image}
           resizeMode="cover"
           onLoad={() => setImageLoaded(true)}
         />
-        
+
         {overlay && (
           <LinearGradient
             colors={['transparent', 'rgba(0,0,0,0.3)', 'rgba(0,0,0,0.7)']}
             style={styles.overlay}
           />
         )}
-        
+
         {imageLoaded && allowZoom && (
-          <Animated.View entering={FadeIn.delay(500)} style={styles.zoomIndicator}>
+          <Animated.View
+            entering={FadeIn.delay(500)}
+            style={styles.zoomIndicator}
+          >
             <View style={styles.zoomIcon}>
               <ZoomIn size={16} color="#FFF" />
             </View>
           </Animated.View>
         )}
-        
+
         {children}
       </TouchableOpacity>
 
@@ -76,14 +93,21 @@ export default function SceneIllustration({
             onPress={() => setIsZoomed(false)}
             activeOpacity={1}
           >
-            <Animated.View entering={ReanimatedZoomIn.springify()} style={styles.zoomedImageContainer}>
+            <Animated.View
+              style={styles.zoomedImageContainer}
+              entering={ReanimatedZoomIn}
+            >
               <Image
-                source={{ uri: imageUrl }}
+                source={
+                  typeof imageUrl === 'string'
+                    ? { uri: imageUrl }
+                    : imageUrl
+                }
                 style={styles.zoomedImage}
                 resizeMode="contain"
               />
             </Animated.View>
-            
+
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setIsZoomed(false)}

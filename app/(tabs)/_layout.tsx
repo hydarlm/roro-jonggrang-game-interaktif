@@ -1,5 +1,12 @@
 import { Tabs } from 'expo-router';
-import { Book, Trophy, Settings, Chrome as Home } from 'lucide-react-native';
+import {
+  Book,
+  Trophy,
+  Settings,
+  Chrome as Home,
+  ImageIcon,
+  Library,
+} from 'lucide-react-native';
 
 export default function TabLayout() {
   return (
@@ -20,31 +27,44 @@ export default function TabLayout() {
           fontSize: 12,
           fontWeight: '600',
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ size, color }) => (
-            <Home size={size} color={color} />
-          ),
+          tabBarIcon: ({ size, color }) => <Home size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="story"
         options={{
           title: 'Story',
-          tabBarIcon: ({ size, color }) => (
-            <Book size={size} color={color} />
-          ),
+          tabBarIcon: ({ size, color }) => <Book size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="achievements"
         options={{
-          title: 'Gallery',
+          title: 'Pencapaian',
+          tabBarIcon: ({ size, color }) => <Trophy size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="gallery"
+        options={{
+          title: 'Galeri',
           tabBarIcon: ({ size, color }) => (
-            <Trophy size={size} color={color} />
+            <ImageIcon size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="library"
+        options={{
+          title: 'Pustaka',
+          tabBarIcon: ({ size, color }) => (
+            <Library size={size} color={color} />
           ),
         }}
       />

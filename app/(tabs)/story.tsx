@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { ChevronRight, BookOpen, Award } from 'lucide-react-native';
@@ -22,7 +29,8 @@ export default function StoryScreen() {
       id: 1,
       title: 'Kerajaan Prambanan',
       subtitle: 'Awal Legenda',
-      description: 'Perkenalan dengan Roro Jonggrang dan keindahan Kerajaan Prambanan yang megah.',
+      description:
+        'Perkenalan dengan Roro Jonggrang dan keindahan Kerajaan Prambanan yang megah.',
       isUnlocked: true,
       isCompleted: false,
     },
@@ -30,7 +38,8 @@ export default function StoryScreen() {
       id: 2,
       title: 'Bandung Bondowoso',
       subtitle: 'Pangeran Perkasa',
-      description: 'Kedatangan pangeran sakti yang menaklukkan kerajaan dengan kekuatan magisnya.',
+      description:
+        'Kedatangan pangeran sakti yang menaklukkan kerajaan dengan kekuatan magisnya.',
       isUnlocked: false,
       isCompleted: false,
     },
@@ -38,7 +47,8 @@ export default function StoryScreen() {
       id: 3,
       title: 'Lamaran & Tantangan',
       subtitle: 'Permintaan Mustahil',
-      description: 'Roro Jonggrang memberikan tantangan membangun seribu candi dalam satu malam.',
+      description:
+        'Roro Jonggrang memberikan tantangan membangun seribu candi dalam satu malam.',
       isUnlocked: false,
       isCompleted: false,
     },
@@ -46,7 +56,8 @@ export default function StoryScreen() {
       id: 4,
       title: 'Pembangunan Candi',
       subtitle: 'Malam yang Panjang',
-      description: 'Usaha gigih Bandung Bondowoso dan tipu daya Roro Jonggrang.',
+      description:
+        'Usaha gigih Bandung Bondowoso dan tipu daya Roro Jonggrang.',
       isUnlocked: false,
       isCompleted: false,
     },
@@ -69,10 +80,10 @@ export default function StoryScreen() {
       const progress = await AsyncStorage.getItem('chapterProgress');
       if (progress) {
         const savedProgress = JSON.parse(progress);
-        setChapters(prevChapters => 
-          prevChapters.map(chapter => ({
+        setChapters((prevChapters) =>
+          prevChapters.map((chapter) => ({
             ...chapter,
-            ...savedProgress[chapter.id]
+            ...savedProgress[chapter.id],
           }))
         );
       }
@@ -82,7 +93,7 @@ export default function StoryScreen() {
   };
 
   const playChapter = (chapterId: number) => {
-    const chapter = chapters.find(c => c.id === chapterId);
+    const chapter = chapters.find((c) => c.id === chapterId);
     if (!chapter?.isUnlocked) {
       Alert.alert(
         'Chapter Terkunci',
@@ -91,7 +102,7 @@ export default function StoryScreen() {
       );
       return;
     }
-    
+
     router.push(`/chapter/${chapterId}`);
   };
 
@@ -125,20 +136,22 @@ export default function StoryScreen() {
                 <Text style={styles.scoreText}>{chapter.score || 0}%</Text>
               </View>
             )}
-            <ChevronRight 
-              size={24} 
-              color={chapter.isUnlocked ? '#D4AF37' : '#666'} 
+            <ChevronRight
+              size={24}
+              color={chapter.isUnlocked ? '#D4AF37' : '#666'}
             />
           </View>
         </View>
-        
-        <Text style={[
-          styles.chapterDescription,
-          !chapter.isUnlocked && styles.lockedText
-        ]}>
+
+        <Text
+          style={[
+            styles.chapterDescription,
+            !chapter.isUnlocked && styles.lockedText,
+          ]}
+        >
           {chapter.description}
         </Text>
-        
+
         <View style={styles.chapterFooter}>
           <View style={styles.chapterMeta}>
             <BookOpen size={14} color="#8B4513" />
@@ -158,10 +171,15 @@ export default function StoryScreen() {
     >
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Perjalanan Legenda</Text>
-        <Text style={styles.headerSubtitle}>Pilih chapter untuk memulai petualangan</Text>
+        <Text style={styles.headerSubtitle}>
+          Pilih chapter untuk memulai petualangan
+        </Text>
       </View>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+      >
         {chapters.map((chapter, index) => renderChapter(chapter, index))}
       </ScrollView>
     </LinearGradient>

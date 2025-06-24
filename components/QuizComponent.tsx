@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { CircleCheck as CheckCircle, Circle as XCircle, Award, Star } from 'lucide-react-native';
-import Animated, { FadeIn, SlideInDown, BounceIn } from 'react-native-reanimated';
+import {
+  CircleCheck as CheckCircle,
+  Circle as XCircle,
+  Award,
+  Star,
+} from 'lucide-react-native';
+import Animated, {
+  FadeIn,
+  SlideInDown,
+  BounceIn,
+} from 'react-native-reanimated';
 
 interface QuizQuestion {
   id: string;
@@ -53,18 +62,19 @@ export default function QuizComponent({
 
   const handleAnswerSelect = (answerIndex: number) => {
     if (isAnswered) return;
-    
+
     setSelectedAnswer(answerIndex);
     setIsAnswered(true);
-    
+
     const newAnswers = [...userAnswers, answerIndex];
     setUserAnswers(newAnswers);
-    
-    const isCorrect = answerIndex === questions[currentQuestionIndex].correctAnswer;
+
+    const isCorrect =
+      answerIndex === questions[currentQuestionIndex].correctAnswer;
     if (isCorrect) {
       setScore(score + 1);
     }
-    
+
     if (questions[currentQuestionIndex].explanation) {
       setShowExplanation(true);
     } else {
@@ -76,7 +86,7 @@ export default function QuizComponent({
 
   const nextQuestion = (answers: number[]) => {
     setShowExplanation(false);
-    
+
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
@@ -104,8 +114,10 @@ export default function QuizComponent({
   };
 
   const getScoreMessage = (scorePercentage: number) => {
-    if (scorePercentage >= 80) return 'Luar biasa! Anda benar-benar memahami cerita ini.';
-    if (scorePercentage >= 60) return 'Bagus! Anda cukup memperhatikan detail cerita.';
+    if (scorePercentage >= 80)
+      return 'Luar biasa! Anda benar-benar memahami cerita ini.';
+    if (scorePercentage >= 60)
+      return 'Bagus! Anda cukup memperhatikan detail cerita.';
     return 'Jangan menyerah! Coba baca cerita dengan lebih teliti.';
   };
 
@@ -124,7 +136,11 @@ export default function QuizComponent({
     >
       <View style={styles.modalContainer}>
         <LinearGradient
-          colors={['rgba(0,0,0,0.9)', 'rgba(26,26,26,0.95)', 'rgba(75,0,130,0.9)']}
+          colors={[
+            'rgba(0,0,0,0.9)',
+            'rgba(26,26,26,0.95)',
+            'rgba(75,0,130,0.9)',
+          ]}
           style={styles.modalContent}
         >
           {!showResult ? (
@@ -139,29 +155,34 @@ export default function QuizComponent({
 
               {/* Progress Bar */}
               <View style={styles.progressBar}>
-                <Animated.View 
+                <Animated.View
                   style={[styles.progressFill, { width: `${progress}%` }]}
                 />
               </View>
 
               {/* Question */}
               <View style={styles.questionContainer}>
-                <Text style={styles.questionText}>{currentQuestion.question}</Text>
+                <Text style={styles.questionText}>
+                  {currentQuestion.question}
+                </Text>
               </View>
 
               {/* Options */}
               <View style={styles.optionsContainer}>
                 {currentQuestion.options.map((option, index) => {
-                  let optionStyle = styles.optionButton;
-                  
+                  let optionStyle = [styles.optionButton];
+
                   if (isAnswered) {
                     if (index === currentQuestion.correctAnswer) {
-                      optionStyle = [styles.optionButton, styles.correctOption];
-                    } else if (index === selectedAnswer && index !== currentQuestion.correctAnswer) {
-                      optionStyle = [styles.optionButton, styles.incorrectOption];
+                      optionStyle.push(styles.correctOption);
+                    } else if (
+                      index === selectedAnswer &&
+                      index !== currentQuestion.correctAnswer
+                    ) {
+                      optionStyle.push(styles.incorrectOption);
                     }
                   }
-                  
+
                   return (
                     <TouchableOpacity
                       key={index}
@@ -170,12 +191,15 @@ export default function QuizComponent({
                       disabled={isAnswered}
                     >
                       <Text style={styles.optionText}>{option}</Text>
-                      {isAnswered && index === currentQuestion.correctAnswer && (
-                        <CheckCircle size={20} color="#4CAF50" />
-                      )}
-                      {isAnswered && index === selectedAnswer && index !== currentQuestion.correctAnswer && (
-                        <XCircle size={20} color="#F44336" />
-                      )}
+                      {isAnswered &&
+                        index === currentQuestion.correctAnswer && (
+                          <CheckCircle size={20} color="#4CAF50" />
+                        )}
+                      {isAnswered &&
+                        index === selectedAnswer &&
+                        index !== currentQuestion.correctAnswer && (
+                          <XCircle size={20} color="#F44336" />
+                        )}
                     </TouchableOpacity>
                   );
                 })}
@@ -183,10 +207,18 @@ export default function QuizComponent({
 
               {/* Explanation */}
               {showExplanation && currentQuestion.explanation && (
-                <Animated.View entering={SlideInDown} style={styles.explanationContainer}>
+                <Animated.View
+                  entering={SlideInDown}
+                  style={styles.explanationContainer}
+                >
                   <Text style={styles.explanationTitle}>Penjelasan:</Text>
-                  <Text style={styles.explanationText}>{currentQuestion.explanation}</Text>
-                  <TouchableOpacity style={styles.continueButton} onPress={handleContinue}>
+                  <Text style={styles.explanationText}>
+                    {currentQuestion.explanation}
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.continueButton}
+                    onPress={handleContinue}
+                  >
                     <Text style={styles.continueButtonText}>Lanjutkan</Text>
                   </TouchableOpacity>
                 </Animated.View>
@@ -200,14 +232,19 @@ export default function QuizComponent({
               </View>
 
               <View style={styles.scoreContainer}>
-                <Text style={[styles.scoreText, { color: getScoreColor(finalScore) }]}>
+                <Text
+                  style={[
+                    styles.scoreText,
+                    { color: getScoreColor(finalScore) },
+                  ]}
+                >
                   {finalScore}%
                 </Text>
                 <Text style={styles.scoreLabel}>
                   {score} dari {questions.length} benar
                 </Text>
               </View>
-              
+
               <View style={styles.starsContainer}>
                 {[1, 2, 3].map((star) => (
                   <Star
@@ -223,7 +260,10 @@ export default function QuizComponent({
                 {getScoreMessage(finalScore)}
               </Text>
 
-              <TouchableOpacity style={styles.finishButton} onPress={handleClose}>
+              <TouchableOpacity
+                style={styles.finishButton}
+                onPress={handleClose}
+              >
                 <Text style={styles.finishButtonText}>Selesai</Text>
               </TouchableOpacity>
             </Animated.View>
@@ -305,10 +345,24 @@ const styles = StyleSheet.create({
   correctOption: {
     backgroundColor: 'rgba(76, 175, 80, 0.2)',
     borderColor: '#4CAF50',
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   incorrectOption: {
     backgroundColor: 'rgba(244, 67, 54, 0.2)',
     borderColor: '#F44336',
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   optionText: {
     fontSize: 16,
